@@ -13,7 +13,7 @@ class PicrossThing {
 
   private int numberFound = 0;
   private PicrossRow workingRow;
-  
+
   public static int rowsMade = 0;
 
   public PicrossThing(PicrossRow row) {

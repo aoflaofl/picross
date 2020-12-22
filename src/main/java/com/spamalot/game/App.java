@@ -46,18 +46,18 @@ public class App {
   private static void solveTheDamnPuzzle(final PicrossPuzzle pz) {
     // 125841
     // 117630
+    // 87822
     processRows(pz);
     processColumns(pz);
 
     boolean running = true;
     while (running) {
-      boolean different1 = processRows(pz);
-      if (!different1) {
-        break;
-      }
-      boolean different2 = processColumns(pz);
-      if (!different2) {
-        break;
+      if (processRows(pz)) {
+        if (!processColumns(pz)) {
+          running = false;
+        }
+      } else {
+        running = false;
       }
     }
   }
@@ -65,6 +65,9 @@ public class App {
   private static boolean processColumns(final PicrossPuzzle pz) {
     boolean different = false;
     for (PicrossRow i : pz.getColumns()) {
+      if (i.isSolved()) {
+        continue;
+      }
       different = i.processTheRowsData() || different;
     }
     LOG.info("After Columns:\n{}", pz);
@@ -74,6 +77,9 @@ public class App {
   private static boolean processRows(final PicrossPuzzle pz) {
     boolean different = false;
     for (PicrossRow i : pz.getRows()) {
+      if (i.isSolved()) {
+        continue;
+      }
       different = i.processTheRowsData() || different;
     }
     LOG.info("After Rows:\n{}", pz);
