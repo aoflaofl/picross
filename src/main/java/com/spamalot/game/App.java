@@ -42,7 +42,6 @@ public class App {
     return ret;
   }
 
-  @SuppressWarnings("boxing")
   private static void solveTheDamnPuzzle(final PicrossPuzzle pz) {
     // Track progress in reducing number of rows made.
     // 125841
@@ -55,9 +54,6 @@ public class App {
         break;
       }
     }
-
-    LOG.info("Rows: {}", PicrossThing.rowsMade);
-
   }
 
   private static boolean processColumns(final PicrossPuzzle pz) {

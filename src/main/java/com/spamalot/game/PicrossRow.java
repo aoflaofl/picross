@@ -1,8 +1,8 @@
 package com.spamalot.game;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.StringJoiner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +23,6 @@ class PicrossRow {
 
   private int size;
 
-  private PicrossThing patternMatcher = new PicrossThing(this);
-
   private int[] description;
 
   private List<PicrossCell> rowCells = new ArrayList<>();
@@ -32,20 +30,32 @@ class PicrossRow {
   private boolean solved;
 
   private List<List<PicrossCell>> possibleValues = new ArrayList<>();
+  private Accumulator accum = new PicrossRow.Accumulator();
 
   void addRowCell(PicrossCell c) {
     this.rowCells.add(c);
   }
 
+  @SuppressWarnings("boxing")
   public boolean processTheRowsData() {
+    // Remove rows that can't possibly match from the possible matches list.
+    Iterator<List<PicrossCell>> it = this.possibleValues.iterator();
+    while (it.hasNext()) {
+      if (!matchesEstablished(it.next())) {
+        it.remove();
+      }
+    }
 
-    List<PicrossCell> accumulator = this.patternMatcher.doThePicrossThing();
+    // LOG.info("Possible values remaining: {}", this.possibleValues.size());
+
+    this.accum.update(this.possibleValues);
+
     boolean different = false;
     this.solved = true;
     for (int i = 0; i < this.size; i++) {
-      if (this.getCell(i).charValue() != accumulator.get(i).charValue()) {
+      if (this.getCell(i).charValue() != this.accum.get(i).charValue()) {
         different = true;
-        this.getCell(i).setValue(accumulator.get(i).charValue());
+        this.getCell(i).setValue(this.accum.get(i).charValue());
       }
       if (this.getCell(i).charValue() == PicrossCell.UNDECIDED) {
         this.solved = false;
@@ -55,6 +65,16 @@ class PicrossRow {
     return different;
   }
 
+  private boolean matchesEstablished(List<PicrossCell> row) {
+    for (int i = 0; i < row.size(); i++) {
+      if (!(this.getCell(i).charValue() == PicrossCell.UNDECIDED
+          || this.getCell(i).charValue() == row.get(i).charValue())) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   boolean isSolved() {
     return this.solved;
   }
@@ -62,6 +82,7 @@ class PicrossRow {
   @SuppressWarnings("boxing")
   public void setDescription(List<Integer> is) {
     this.description = is.stream().mapToInt(i -> i).toArray();
+    this.possibleValues = PicrossPatternGenerator.generateAllPossiblePatterns(this.size, this.description);
   }
 
   public int getSize() {
@@ -72,22 +93,43 @@ class PicrossRow {
     return this.description;
   }
 
-  public PicrossCell getCell(int i) {
+  private PicrossCell getCell(int i) {
     return this.rowCells.get(i);
   }
 
-  public String toJsonString() {
-    StringBuilder sb = new StringBuilder();
-    StringJoiner sj = new StringJoiner(",");
+  private class Accumulator {
+    private List<PicrossCell> acc = new ArrayList<>();
+    private int numberFound = 0;
 
-    for (int i : getDescription()) {
-      sj.add(Integer.toString(i));
+    public Accumulator() {
     }
-    sb.append("[").append(sj).append("]");
-    return sb.toString();
-  }
 
-  public void addToPossibleValues(List<PicrossCell> row) {
-    this.possibleValues.add(row);
+    List<PicrossCell> update(List<List<PicrossCell>> possibleRows) {
+      this.numberFound = 0;
+      this.acc = new ArrayList<>();
+      for (List<PicrossCell> row : possibleRows) {
+        updateAccumulator(row);
+      }
+      return this.acc;
+    }
+
+    private void updateAccumulator(List<PicrossCell> row) {
+      this.numberFound++;
+      if (this.numberFound == 1) {
+        for (PicrossCell cell : row) {
+          this.acc.add(new PicrossCell(cell.charValue()));
+        }
+      } else {
+        for (int i = 0; i < row.size(); i++) {
+          if (this.acc.get(i).charValue() != row.get(i).charValue()) {
+            this.acc.get(i).setValue(PicrossCell.UNDECIDED);
+          }
+        }
+      }
+    }
+
+    PicrossCell get(int i) {
+      return this.acc.get(i);
+    }
   }
 }
