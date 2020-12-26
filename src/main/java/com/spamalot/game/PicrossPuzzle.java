@@ -2,7 +2,6 @@ package com.spamalot.game;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
 
 class PicrossPuzzle {
   private PicrossCell[][] board;
@@ -34,7 +33,7 @@ class PicrossPuzzle {
     }
   }
 
-  public PicrossPuzzle(PuzzleDescription pppp) {
+  public PicrossPuzzle(PuzzleSpecification pppp) {
     this(pppp.getColumns().size(), pppp.getRows().size());
     for (int i = 0; i < this.height; i++) {
       this.getRow(i).setDescription(pppp.getRows().get(i));
@@ -89,25 +88,5 @@ class PicrossPuzzle {
 
   public List<PicrossRow> getRows() {
     return this.rows;
-  }
-
-  public String toJsonString() {
-    StringBuilder sb = new StringBuilder();
-
-    sb.append("{");
-    StringJoiner sj = new StringJoiner(",");
-
-    sb.append("\"rows\":[");
-    for (PicrossRow i : this.rows) {
-      sj.add(i.toJsonString());
-    }
-    sb.append(sj).append("],\"columns\":[");
-
-    sj = new StringJoiner(",");
-    for (PicrossRow i : this.columns) {
-      sj.add(i.toJsonString());
-    }
-    sb.append(sj).append("]}");
-    return sb.toString();
   }
 }

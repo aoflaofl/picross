@@ -25,15 +25,14 @@ public class App {
     for (PicrossPuzzle p : pz) {
       solveTheDamnPuzzle(p);
     }
-    LOG.info("Rows: {}", com.spamalot.game.PicrossThing.rowsMade);
   }
 
   private static List<PicrossPuzzle> readPuzzleJson(final String path) {
     List<PicrossPuzzle> ret = new ArrayList<>();
 
     try {
-      List<PuzzleDescription> list = Arrays.asList(MAPPER.readValue(new File(path), PuzzleDescription[].class));
-      for (PuzzleDescription pd : list) {
+      List<PuzzleSpecification> list = Arrays.asList(MAPPER.readValue(new File(path), PuzzleSpecification[].class));
+      for (PuzzleSpecification pd : list) {
         ret.add(new PicrossPuzzle(pd));
       }
     } catch (IOException e) {
@@ -43,32 +42,30 @@ public class App {
     return ret;
   }
 
+  @SuppressWarnings("boxing")
   private static void solveTheDamnPuzzle(final PicrossPuzzle pz) {
+    // Track progress in reducing number of rows made.
     // 125841
     // 117630
     // 87822
     processRows(pz);
-    processColumns(pz);
 
-    boolean running = true;
-    while (running) {
-      if (processRows(pz)) {
-        if (!processColumns(pz)) {
-          running = false;
-        }
-      } else {
-        running = false;
+    while (true) {
+      if (!(processColumns(pz) && processRows(pz))) {
+        break;
       }
     }
+
+    LOG.info("Rows: {}", PicrossThing.rowsMade);
+
   }
 
   private static boolean processColumns(final PicrossPuzzle pz) {
     boolean different = false;
     for (PicrossRow i : pz.getColumns()) {
-      if (i.isSolved()) {
-        continue;
+      if (!i.isSolved()) {
+        different = i.processTheRowsData() || different;
       }
-      different = i.processTheRowsData() || different;
     }
     LOG.info("After Columns:\n{}", pz);
     return different;
@@ -77,10 +74,9 @@ public class App {
   private static boolean processRows(final PicrossPuzzle pz) {
     boolean different = false;
     for (PicrossRow i : pz.getRows()) {
-      if (i.isSolved()) {
-        continue;
+      if (!i.isSolved()) {
+        different = i.processTheRowsData() || different;
       }
-      different = i.processTheRowsData() || different;
     }
     LOG.info("After Rows:\n{}", pz);
     return different;

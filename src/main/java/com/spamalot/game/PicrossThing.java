@@ -34,6 +34,8 @@ class PicrossThing {
     if (level == this.workingRow.getDescription().length) {
       List<PicrossCell> row = buildRow(spaces);
 
+      this.workingRow.addToPossibleValues(row);
+
       if (matchesEstablished(row)) {
         updateAccumulator(row);
       }

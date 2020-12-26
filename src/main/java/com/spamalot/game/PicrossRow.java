@@ -25,15 +25,13 @@ class PicrossRow {
 
   private PicrossThing patternMatcher = new PicrossThing(this);
 
-  public void setSize(int size) {
-    this.size = size;
-  }
-
   private int[] description;
 
   private List<PicrossCell> rowCells = new ArrayList<>();
 
   private boolean solved;
+
+  private List<List<PicrossCell>> possibleValues = new ArrayList<>();
 
   void addRowCell(PicrossCell c) {
     this.rowCells.add(c);
@@ -43,14 +41,14 @@ class PicrossRow {
 
     List<PicrossCell> accumulator = this.patternMatcher.doThePicrossThing();
     boolean different = false;
-    solved = true;
+    this.solved = true;
     for (int i = 0; i < this.size; i++) {
       if (this.getCell(i).charValue() != accumulator.get(i).charValue()) {
         different = true;
         this.getCell(i).setValue(accumulator.get(i).charValue());
       }
       if (this.getCell(i).charValue() == PicrossCell.UNDECIDED) {
-        solved = false;
+        this.solved = false;
       }
     }
 
@@ -58,7 +56,7 @@ class PicrossRow {
   }
 
   boolean isSolved() {
-    return solved;
+    return this.solved;
   }
 
   @SuppressWarnings("boxing")
@@ -87,5 +85,9 @@ class PicrossRow {
     }
     sb.append("[").append(sj).append("]");
     return sb.toString();
+  }
+
+  public void addToPossibleValues(List<PicrossCell> row) {
+    this.possibleValues.add(row);
   }
 }
