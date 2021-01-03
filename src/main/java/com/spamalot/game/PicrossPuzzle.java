@@ -33,34 +33,20 @@ class PicrossPuzzle {
     }
   }
 
-  PicrossPuzzle(final PuzzleSpecification pppp) {
-    this(pppp.getColumns().size(), pppp.getRows().size());
+  PicrossPuzzle(final PuzzleSpecification puzzleSpec) {
+    this(puzzleSpec.getColumns().size(), puzzleSpec.getRows().size());
+
     for (int i = 0; i < this.height; i++) {
-      this.getRow(i).setDescription(pppp.getRows().get(i));
+      this.getRow(i).setDescription(puzzleSpec.getRows().get(i));
     }
+
     for (int i = 0; i < this.width; i++) {
-      this.getColumn(i).setDescription(pppp.getColumns().get(i));
+      this.getColumn(i).setDescription(puzzleSpec.getColumns().get(i));
     }
   }
 
   private int height;
   private int width;
-
-  public int getHeight() {
-    return this.height;
-  }
-
-  public int getWidth() {
-    return this.width;
-  }
-
-  public void setHeight(final int height) {
-    this.height = height;
-  }
-
-  public void setWidth(final int width) {
-    this.width = width;
-  }
 
   private PicrossRow getRow(final int i) {
     return this.rows.get(i);
