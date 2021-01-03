@@ -7,7 +7,7 @@ class PicrossCell {
 
   private char value;
 
-  PicrossCell(char c) {
+  PicrossCell(final char c) {
     this.value = c;
   }
 
@@ -15,7 +15,7 @@ class PicrossCell {
     return this.value;
   }
 
-  public void setValue(char c) {
+  public void setValue(final char c) {
     this.value = c;
   }
 

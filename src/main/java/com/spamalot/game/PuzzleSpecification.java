@@ -38,17 +38,17 @@ class PuzzleSpecification {
   }
 
   @JsonProperty("columns")
-  public void setColumns(List<List<Integer>> columns) {
+  public void setColumns(final List<List<Integer>> columns) {
     this.columns = columns;
   }
 
   @JsonProperty("name")
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 
   @JsonProperty("rows")
-  public void setRows(List<List<Integer>> rows) {
+  public void setRows(final List<List<Integer>> rows) {
     this.rows = rows;
   }
 }

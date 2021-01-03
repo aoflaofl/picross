@@ -9,9 +9,13 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class App {
+public final class App {
   private static final Logger LOG = LoggerFactory.getLogger(App.class);
   private static final ObjectMapper MAPPER = new ObjectMapper();
+
+  private App() {
+    // Do nothing.
+  }
 
   /**
    * Begin here.
@@ -47,10 +51,11 @@ public class App {
     // 125841
     // 117630
     // 87822
-    processRows(pz);
+    // processRows(pz);
+    processColumns(pz);
 
     while (true) {
-      if (!(processColumns(pz) && processRows(pz))) {
+      if (!(processRows(pz) && processColumns(pz))) {
         break;
       }
     }

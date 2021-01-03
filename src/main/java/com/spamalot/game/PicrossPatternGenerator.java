@@ -6,10 +6,13 @@ import java.util.stream.IntStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class PicrossPatternGenerator {
+final class PicrossPatternGenerator {
   private static final Logger LOG = LoggerFactory.getLogger(PicrossPatternGenerator.class);
 
-  static List<List<PicrossCell>> generateAllPossiblePatterns(int rowSize, int[] rowDescription) {
+  private PicrossPatternGenerator() {
+  }
+
+  static List<List<PicrossCell>> generateAllPossiblePatterns(final int rowSize, final int[] rowDescription) {
     int numberOfOpenCells = rowSize - IntStream.of(rowDescription).sum();
     int[] gaps = new int[rowDescription.length];
 
@@ -18,8 +21,8 @@ class PicrossPatternGenerator {
     return ret;
   }
 
-  private static void recursion(int level, int[] gaps, int openPlaces, int[] rowDescription, int rowSize,
-      List<List<PicrossCell>> ret) {
+  private static void recursion(final int level, final int[] gaps, final int openPlaces, final int[] rowDescription, final int rowSize,
+      final List<List<PicrossCell>> ret) {
     if (level == rowDescription.length) {
       List<PicrossCell> row = buildRow(rowSize, gaps, rowDescription);
 
@@ -36,16 +39,16 @@ class PicrossPatternGenerator {
    * Build a list of row cells using a list of space lengths and the row's
    * description.
    * 
-   * @param spaces
+   * @param gaps
    * @return
    */
-  private static List<PicrossCell> buildRow(int rowSize, int[] spaces, int[] rowDescription) {
+  private static List<PicrossCell> buildRow(final int rowSize, final int[] gaps, final int[] rowDescription) {
     List<PicrossCell> ret = new ArrayList<>(rowSize);
 
     int count = 0;
-    for (int i = 0; i < spaces.length; i++) {
-      count = count + spaces[i] + rowDescription[i];
-      for (int j = 0; j < spaces[i]; j++) {
+    for (int i = 0; i < gaps.length; i++) {
+      count = count + gaps[i] + rowDescription[i];
+      for (int j = 0; j < gaps[i]; j++) {
         ret.add(new PicrossCell(PicrossCell.EMPTY));
       }
       for (int j = 0; j < rowDescription[i]; j++) {

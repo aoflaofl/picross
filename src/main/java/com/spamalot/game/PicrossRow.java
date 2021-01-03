@@ -3,6 +3,7 @@ package com.spamalot.game;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,22 +18,22 @@ import org.slf4j.LoggerFactory;
 class PicrossRow {
   private static final Logger LOG = LoggerFactory.getLogger(PicrossRow.class);
 
-  PicrossRow(int size) {
+  PicrossRow(final int size) {
     this.size = size;
   }
 
-  private int size;
+  private final int size;
 
   private int[] description;
 
-  private List<PicrossCell> rowCells = new ArrayList<>();
+  private final List<PicrossCell> rowCells = new ArrayList<>();
 
   private boolean solved;
 
   private List<List<PicrossCell>> possibleValues = new ArrayList<>();
-  private Accumulator accum = new PicrossRow.Accumulator();
+  private final Accumulator accum = new PicrossRow.Accumulator();
 
-  void addRowCell(PicrossCell c) {
+  void addRowCell(final PicrossCell c) {
     this.rowCells.add(c);
   }
 
@@ -65,7 +66,7 @@ class PicrossRow {
     return different;
   }
 
-  private boolean matchesEstablished(List<PicrossCell> row) {
+  private boolean matchesEstablished(final List<PicrossCell> row) {
     for (int i = 0; i < row.size(); i++) {
       if (!(this.getCell(i).charValue() == PicrossCell.UNDECIDED
           || this.getCell(i).charValue() == row.get(i).charValue())) {
@@ -80,7 +81,7 @@ class PicrossRow {
   }
 
   @SuppressWarnings("boxing")
-  public void setDescription(List<Integer> is) {
+  public void setDescription(final List<Integer> is) {
     this.description = is.stream().mapToInt(i -> i).toArray();
     this.possibleValues = PicrossPatternGenerator.generateAllPossiblePatterns(this.size, this.description);
   }
@@ -93,7 +94,7 @@ class PicrossRow {
     return this.description;
   }
 
-  private PicrossCell getCell(int i) {
+  private PicrossCell getCell(final int i) {
     return this.rowCells.get(i);
   }
 
@@ -101,10 +102,10 @@ class PicrossRow {
     private List<PicrossCell> acc = new ArrayList<>();
     private int numberFound = 0;
 
-    public Accumulator() {
+    Accumulator() {
     }
 
-    List<PicrossCell> update(List<List<PicrossCell>> possibleRows) {
+    List<PicrossCell> update(final List<List<PicrossCell>> possibleRows) {
       this.numberFound = 0;
       this.acc = new ArrayList<>();
       for (List<PicrossCell> row : possibleRows) {
@@ -113,7 +114,7 @@ class PicrossRow {
       return this.acc;
     }
 
-    private void updateAccumulator(List<PicrossCell> row) {
+    private void updateAccumulator(final List<PicrossCell> row) {
       this.numberFound++;
       if (this.numberFound == 1) {
         for (PicrossCell cell : row) {
@@ -128,7 +129,7 @@ class PicrossRow {
       }
     }
 
-    PicrossCell get(int i) {
+    PicrossCell get(final int i) {
       return this.acc.get(i);
     }
   }

@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 class PicrossPuzzle {
-  private PicrossCell[][] board;
+  private final PicrossCell[][] board;
 
-  private List<PicrossRow> rows = new ArrayList<>();
-  private List<PicrossRow> columns = new ArrayList<>();
+  private final List<PicrossRow> rows = new ArrayList<>();
+  private final List<PicrossRow> columns = new ArrayList<>();
 
-  private PicrossPuzzle(int width, int height) {
+  private PicrossPuzzle(final int width, final int height) {
     this.height = height;
     this.width = width;
 
@@ -33,7 +33,7 @@ class PicrossPuzzle {
     }
   }
 
-  public PicrossPuzzle(PuzzleSpecification pppp) {
+  PicrossPuzzle(final PuzzleSpecification pppp) {
     this(pppp.getColumns().size(), pppp.getRows().size());
     for (int i = 0; i < this.height; i++) {
       this.getRow(i).setDescription(pppp.getRows().get(i));
@@ -54,19 +54,19 @@ class PicrossPuzzle {
     return this.width;
   }
 
-  public void setHeight(int height) {
+  public void setHeight(final int height) {
     this.height = height;
   }
 
-  public void setWidth(int width) {
+  public void setWidth(final int width) {
     this.width = width;
   }
 
-  private PicrossRow getRow(int i) {
+  private PicrossRow getRow(final int i) {
     return this.rows.get(i);
   }
 
-  private PicrossRow getColumn(int i) {
+  private PicrossRow getColumn(final int i) {
     return this.columns.get(i);
   }
 
