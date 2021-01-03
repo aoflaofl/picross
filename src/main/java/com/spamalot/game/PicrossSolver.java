@@ -9,11 +9,11 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class App {
-  private static final Logger LOG = LoggerFactory.getLogger(App.class);
+public final class PicrossSolver {
+  private static final Logger LOG = LoggerFactory.getLogger(PicrossSolver.class);
   private static final ObjectMapper MAPPER = new ObjectMapper();
 
-  private App() {
+  private PicrossSolver() {
     // Do nothing.
   }
 
