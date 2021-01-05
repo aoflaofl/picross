@@ -3,7 +3,6 @@ package com.spamalot.game;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,7 +104,7 @@ class PicrossRow {
     Accumulator() {
     }
 
-    List<PicrossCell> update(final List<List<PicrossCell>> possibleRows) {
+    private List<PicrossCell> update(final List<List<PicrossCell>> possibleRows) {
       this.numberFound = 0;
       this.acc = new ArrayList<>();
       for (List<PicrossCell> row : possibleRows) {
