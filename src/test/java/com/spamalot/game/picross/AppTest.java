@@ -1,4 +1,4 @@
-package com.spamalot.game;
+package com.spamalot.game.picross;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

@@ -1,4 +1,4 @@
-package com.spamalot.game;
+package com.spamalot.game.picross;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;

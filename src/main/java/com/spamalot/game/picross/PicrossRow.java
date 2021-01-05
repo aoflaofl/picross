@@ -1,4 +1,4 @@
-package com.spamalot.game;
+package com.spamalot.game.picross;
 
 import java.util.ArrayList;
 import java.util.Iterator;

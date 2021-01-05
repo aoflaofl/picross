@@ -1,4 +1,4 @@
-package com.spamalot.game;
+package com.spamalot.game.picross;
 
 class PicrossCell {
   public static final char EMPTY = '.';
