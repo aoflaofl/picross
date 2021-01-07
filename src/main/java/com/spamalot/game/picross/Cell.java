@@ -1,13 +1,13 @@
 package com.spamalot.game.picross;
 
-class PicrossCell {
+class Cell {
   public static final char EMPTY = '.';
   public static final char FILLED = '*';
   public static final char UNDECIDED = '-';
 
   private char value;
 
-  PicrossCell(final char c) {
+  Cell(final char c) {
     this.value = c;
   }
 

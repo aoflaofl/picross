@@ -14,10 +14,10 @@ import org.slf4j.LoggerFactory;
  *
  */
 
-class PicrossRow {
-  private static final Logger LOG = LoggerFactory.getLogger(PicrossRow.class);
+class Row {
+  private static final Logger LOG = LoggerFactory.getLogger(Row.class);
 
-  PicrossRow(final int size) {
+  Row(final int size) {
     this.size = size;
   }
 
@@ -25,21 +25,21 @@ class PicrossRow {
 
   private int[] description;
 
-  private final List<PicrossCell> rowCells = new ArrayList<>();
+  private final List<Cell> rowCells = new ArrayList<>();
 
   private boolean solved;
 
-  private List<List<PicrossCell>> possibleValues = new ArrayList<>();
-  private final Accumulator accum = new PicrossRow.Accumulator();
+  private List<List<Cell>> possibleValues = new ArrayList<>();
+  private final Accumulator accum = new Row.Accumulator();
 
-  void addRowCell(final PicrossCell c) {
+  void addRowCell(final Cell c) {
     this.rowCells.add(c);
   }
 
   @SuppressWarnings("boxing")
   public boolean processTheRowsData() {
     // Remove rows that can't possibly match from the possible matches list.
-    Iterator<List<PicrossCell>> it = this.possibleValues.iterator();
+    Iterator<List<Cell>> it = this.possibleValues.iterator();
     while (it.hasNext()) {
       if (!matchesEstablished(it.next())) {
         it.remove();
@@ -57,7 +57,7 @@ class PicrossRow {
         different = true;
         this.getCell(i).setValue(this.accum.get(i).charValue());
       }
-      if (this.getCell(i).charValue() == PicrossCell.UNDECIDED) {
+      if (this.getCell(i).charValue() == Cell.UNDECIDED) {
         this.solved = false;
       }
     }
@@ -65,9 +65,9 @@ class PicrossRow {
     return different;
   }
 
-  private boolean matchesEstablished(final List<PicrossCell> row) {
+  private boolean matchesEstablished(final List<Cell> row) {
     for (int i = 0; i < row.size(); i++) {
-      if (!(this.getCell(i).charValue() == PicrossCell.UNDECIDED
+      if (!(this.getCell(i).charValue() == Cell.UNDECIDED
           || this.getCell(i).charValue() == row.get(i).charValue())) {
         return false;
       }
@@ -82,7 +82,7 @@ class PicrossRow {
   @SuppressWarnings("boxing")
   public void setDescription(final List<Integer> is) {
     this.description = is.stream().mapToInt(i -> i).toArray();
-    this.possibleValues = PicrossPatternGenerator.generateAllPossiblePatterns(this.size, this.description);
+    this.possibleValues = PatternGenerator.generateAllPossiblePatterns(this.size, this.description);
   }
 
   public int getSize() {
@@ -93,42 +93,42 @@ class PicrossRow {
     return this.description;
   }
 
-  private PicrossCell getCell(final int i) {
+  private Cell getCell(final int i) {
     return this.rowCells.get(i);
   }
 
   private class Accumulator {
-    private List<PicrossCell> acc = new ArrayList<>();
+    private List<Cell> acc = new ArrayList<>();
     private int numberFound = 0;
 
     Accumulator() {
     }
 
-    private List<PicrossCell> update(final List<List<PicrossCell>> possibleRows) {
+    private List<Cell> update(final List<List<Cell>> possibleRows) {
       this.numberFound = 0;
       this.acc = new ArrayList<>();
-      for (List<PicrossCell> row : possibleRows) {
+      for (List<Cell> row : possibleRows) {
         updateAccumulator(row);
       }
       return this.acc;
     }
 
-    private void updateAccumulator(final List<PicrossCell> row) {
+    private void updateAccumulator(final List<Cell> row) {
       this.numberFound++;
       if (this.numberFound == 1) {
-        for (PicrossCell cell : row) {
-          this.acc.add(new PicrossCell(cell.charValue()));
+        for (Cell cell : row) {
+          this.acc.add(new Cell(cell.charValue()));
         }
       } else {
         for (int i = 0; i < row.size(); i++) {
           if (this.acc.get(i).charValue() != row.get(i).charValue()) {
-            this.acc.get(i).setValue(PicrossCell.UNDECIDED);
+            this.acc.get(i).setValue(Cell.UNDECIDED);
           }
         }
       }
     }
 
-    PicrossCell get(final int i) {
+    Cell get(final int i) {
       return this.acc.get(i);
     }
   }

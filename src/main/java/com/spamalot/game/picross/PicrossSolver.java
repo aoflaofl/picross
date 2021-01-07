@@ -25,19 +25,19 @@ public final class PicrossSolver {
   public static void main(final String[] args) {
     LOG.info("Picross Solver.");
 
-    List<PicrossPuzzle> pz = readPuzzleJson("src/main/resources/pppp.json");
-    for (PicrossPuzzle p : pz) {
+    List<Puzzle> pz = readPuzzleJson("src/main/resources/pppp.json");
+    for (Puzzle p : pz) {
       solveTheDamnPuzzle(p);
     }
   }
 
-  private static List<PicrossPuzzle> readPuzzleJson(final String path) {
-    List<PicrossPuzzle> ret = new ArrayList<>();
+  private static List<Puzzle> readPuzzleJson(final String path) {
+    List<Puzzle> ret = new ArrayList<>();
 
     try {
       List<PuzzleSpecification> list = Arrays.asList(MAPPER.readValue(new File(path), PuzzleSpecification[].class));
       for (PuzzleSpecification pd : list) {
-        ret.add(new PicrossPuzzle(pd));
+        ret.add(new Puzzle(pd));
       }
     } catch (IOException e) {
       LOG.error("Problem reading file {}", path, e);
@@ -46,7 +46,7 @@ public final class PicrossSolver {
     return ret;
   }
 
-  private static void solveTheDamnPuzzle(final PicrossPuzzle pz) {
+  private static void solveTheDamnPuzzle(final Puzzle pz) {
     // Track progress in reducing number of rows made.
     // 125841
     // 117630
@@ -59,27 +59,28 @@ public final class PicrossSolver {
         break;
       }
     }
+    LOG.info("After Solve:\n{}", pz);
   }
 
-  private static boolean processColumns(final PicrossPuzzle pz) {
+  private static boolean processColumns(final Puzzle pz) {
     boolean different = false;
-    for (PicrossRow i : pz.getColumns()) {
+    for (Row i : pz.getColumns()) {
       if (!i.isSolved()) {
         different = i.processTheRowsData() || different;
       }
     }
-    LOG.info("After Columns:\n{}", pz);
+  //  LOG.info("After Columns:\n{}", pz);
     return different;
   }
 
-  private static boolean processRows(final PicrossPuzzle pz) {
+  private static boolean processRows(final Puzzle pz) {
     boolean different = false;
-    for (PicrossRow i : pz.getRows()) {
+    for (Row i : pz.getRows()) {
       if (!i.isSolved()) {
         different = i.processTheRowsData() || different;
       }
     }
-    LOG.info("After Rows:\n{}", pz);
+    //LOG.info("After Rows:\n{}", pz);
     return different;
   }
 }

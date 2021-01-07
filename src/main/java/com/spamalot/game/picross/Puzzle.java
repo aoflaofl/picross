@@ -3,29 +3,29 @@ package com.spamalot.game.picross;
 import java.util.ArrayList;
 import java.util.List;
 
-class PicrossPuzzle {
-  private final PicrossCell[][] board;
+class Puzzle {
+  private final Cell[][] board;
 
-  private final List<PicrossRow> rows = new ArrayList<>();
-  private final List<PicrossRow> columns = new ArrayList<>();
+  private final List<Row> rows = new ArrayList<>();
+  private final List<Row> columns = new ArrayList<>();
 
-  private PicrossPuzzle(final int width, final int height) {
+  private Puzzle(final int width, final int height) {
     this.height = height;
     this.width = width;
 
     for (int i = 0; i < height; i++) {
-      this.rows.add(new PicrossRow(width));
+      this.rows.add(new Row(width));
     }
 
     for (int i = 0; i < width; i++) {
-      this.columns.add(new PicrossRow(height));
+      this.columns.add(new Row(height));
     }
 
-    this.board = new PicrossCell[height][width];
+    this.board = new Cell[height][width];
 
     for (int h = 0; h < height; h++) {
       for (int w = 0; w < width; w++) {
-        PicrossCell c = new PicrossCell(PicrossCell.UNDECIDED);
+        Cell c = new Cell(Cell.UNDECIDED);
         this.board[h][w] = c;
         this.rows.get(h).addRowCell(c);
         this.columns.get(w).addRowCell(c);
@@ -33,7 +33,7 @@ class PicrossPuzzle {
     }
   }
 
-  PicrossPuzzle(final PuzzleSpecification puzzleSpec) {
+  Puzzle(final PuzzleSpecification puzzleSpec) {
     this(puzzleSpec.getColumns().size(), puzzleSpec.getRows().size());
 
     for (int i = 0; i < this.height; i++) {
@@ -48,11 +48,11 @@ class PicrossPuzzle {
   private int height;
   private int width;
 
-  private PicrossRow getRow(final int i) {
+  private Row getRow(final int i) {
     return this.rows.get(i);
   }
 
-  private PicrossRow getColumn(final int i) {
+  private Row getColumn(final int i) {
     return this.columns.get(i);
   }
 
@@ -68,11 +68,11 @@ class PicrossPuzzle {
     return sb.toString();
   }
 
-  public List<PicrossRow> getColumns() {
+  public List<Row> getColumns() {
     return this.columns;
   }
 
-  public List<PicrossRow> getRows() {
+  public List<Row> getRows() {
     return this.rows;
   }
 }

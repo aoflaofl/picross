@@ -6,25 +6,25 @@ import java.util.stream.IntStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-final class PicrossPatternGenerator {
-  private static final Logger LOG = LoggerFactory.getLogger(PicrossPatternGenerator.class);
+final class PatternGenerator {
+  private static final Logger LOG = LoggerFactory.getLogger(PatternGenerator.class);
 
-  private PicrossPatternGenerator() {
+  private PatternGenerator() {
   }
 
-  static List<List<PicrossCell>> generateAllPossiblePatterns(final int rowSize, final int[] rowDescription) {
+  static List<List<Cell>> generateAllPossiblePatterns(final int rowSize, final int[] rowDescription) {
     int numberOfOpenCells = rowSize - IntStream.of(rowDescription).sum();
     int[] gaps = new int[rowDescription.length];
 
-    List<List<PicrossCell>> ret = new ArrayList<>();
+    List<List<Cell>> ret = new ArrayList<>();
     recursion(0, gaps, numberOfOpenCells, rowDescription, rowSize, ret);
     return ret;
   }
 
   private static void recursion(final int level, final int[] gaps, final int openPlaces, final int[] rowDescription, final int rowSize,
-      final List<List<PicrossCell>> ret) {
+      final List<List<Cell>> ret) {
     if (level == rowDescription.length) {
-      List<PicrossCell> row = buildRow(rowSize, gaps, rowDescription);
+      List<Cell> row = buildRow(rowSize, gaps, rowDescription);
 
       ret.add(row);
       return;
@@ -42,22 +42,22 @@ final class PicrossPatternGenerator {
    * @param gaps
    * @return
    */
-  private static List<PicrossCell> buildRow(final int rowSize, final int[] gaps, final int[] rowDescription) {
-    List<PicrossCell> ret = new ArrayList<>(rowSize);
+  private static List<Cell> buildRow(final int rowSize, final int[] gaps, final int[] rowDescription) {
+    List<Cell> ret = new ArrayList<>(rowSize);
 
     int count = 0;
     for (int i = 0; i < gaps.length; i++) {
       count = count + gaps[i] + rowDescription[i];
       for (int j = 0; j < gaps[i]; j++) {
-        ret.add(new PicrossCell(PicrossCell.EMPTY));
+        ret.add(new Cell(Cell.EMPTY));
       }
       for (int j = 0; j < rowDescription[i]; j++) {
-        ret.add(new PicrossCell(PicrossCell.FILLED));
+        ret.add(new Cell(Cell.FILLED));
       }
 
     }
     for (int i = count; i < rowSize; i++) {
-      ret.add(new PicrossCell(PicrossCell.EMPTY));
+      ret.add(new Cell(Cell.EMPTY));
     }
     return ret;
   }
