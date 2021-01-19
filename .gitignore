@@ -30,4 +30,4 @@ target/
 .project
 .checkstyle
 .classpath
-
+.eclipse-pmd
