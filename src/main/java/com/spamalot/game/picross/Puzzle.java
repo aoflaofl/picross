@@ -45,8 +45,8 @@ class Puzzle {
     }
   }
 
-  private int height;
-  private int width;
+  private final int height;
+  private final int width;
 
   private Row getRow(final int i) {
     return this.rows.get(i);

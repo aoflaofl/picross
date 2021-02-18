@@ -36,7 +36,6 @@ class Row {
     this.rowCells.add(c);
   }
 
-  @SuppressWarnings("boxing")
   public boolean processTheRowsData() {
     // Remove rows that can't possibly match from the possible matches list.
     Iterator<List<Cell>> it = this.possibleValues.iterator();
