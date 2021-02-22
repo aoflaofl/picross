@@ -29,6 +29,9 @@ public final class PicrossSolver {
     for (Puzzle p : pz) {
       solveTheDamnPuzzle(p);
     }
+// [ 1, 2, 1 ] width is 8
+    Odometer o = new Odometer(3, 3, 4);
+    o.makeList();
   }
 
   private static List<Puzzle> readPuzzleJson(final String path) {
@@ -69,7 +72,7 @@ public final class PicrossSolver {
         different = i.processTheRowsData() || different;
       }
     }
-  //  LOG.info("After Columns:\n{}", pz);
+    // LOG.info("After Columns:\n{}", pz);
     return different;
   }
 
@@ -80,7 +83,7 @@ public final class PicrossSolver {
         different = i.processTheRowsData() || different;
       }
     }
-    //LOG.info("After Rows:\n{}", pz);
+    // LOG.info("After Rows:\n{}", pz);
     return different;
   }
 }
