@@ -56,7 +56,7 @@ class Row {
         different = true;
         this.getCell(i).setValue(this.accum.get(i).charValue());
       }
-      if (this.getCell(i).charValue() == Cell.UNDECIDED) {
+      if (this.getCell(i).charValue() == CellState.UNDECIDED) {
         this.solved = false;
       }
     }
@@ -66,7 +66,7 @@ class Row {
 
   private boolean matchesEstablished(final List<Cell> row) {
     for (int i = 0; i < row.size(); i++) {
-      if (!(this.getCell(i).charValue() == Cell.UNDECIDED
+      if (!(this.getCell(i).charValue() == CellState.UNDECIDED
           || this.getCell(i).charValue() == row.get(i).charValue())) {
         return false;
       }

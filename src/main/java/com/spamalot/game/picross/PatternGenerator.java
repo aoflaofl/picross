@@ -49,15 +49,15 @@ final class PatternGenerator {
     for (int i = 0; i < gaps.length; i++) {
       count = count + gaps[i] + rowDescription[i];
       for (int j = 0; j < gaps[i]; j++) {
-        ret.add(new Cell(Cell.EMPTY));
+        ret.add(new Cell(CellState.EMPTY));
       }
       for (int j = 0; j < rowDescription[i]; j++) {
-        ret.add(new Cell(Cell.FILLED));
+        ret.add(new Cell(CellState.FILLED));
       }
 
     }
     for (int i = count; i < rowSize; i++) {
-      ret.add(new Cell(Cell.EMPTY));
+      ret.add(new Cell(CellState.EMPTY));
     }
     return ret;
   }

@@ -28,7 +28,7 @@ class Accumulator {
     } else {
       for (int i = 0; i < row.size(); i++) {
         if (this.acc.get(i).charValue() != row.get(i).charValue()) {
-          this.acc.get(i).setValue(Cell.UNDECIDED);
+          this.acc.get(i).setValue(CellState.UNDECIDED);
         }
       }
     }

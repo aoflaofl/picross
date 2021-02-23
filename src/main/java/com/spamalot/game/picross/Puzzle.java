@@ -25,7 +25,7 @@ class Puzzle {
 
     for (int h = 0; h < height; h++) {
       for (int w = 0; w < width; w++) {
-        Cell c = new Cell(Cell.UNDECIDED);
+        Cell c = new Cell(CellState.UNDECIDED);
         this.board[h][w] = c;
         this.rows.get(h).addRowCell(c);
         this.columns.get(w).addRowCell(c);
