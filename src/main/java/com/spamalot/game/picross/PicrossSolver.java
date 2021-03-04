@@ -30,7 +30,7 @@ public final class PicrossSolver {
       solveTheDamnPuzzle(p);
     }
 // [ 1, 2, 1 ] width is 8
-    Odometer o = new Odometer(3, 3, 4);
+    Odometer o = new Odometer(1, 3);
     o.makeList();
   }
 
