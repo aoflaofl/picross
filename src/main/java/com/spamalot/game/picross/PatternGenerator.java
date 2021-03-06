@@ -13,10 +13,10 @@ final class PatternGenerator {
   }
 
   static List<List<Cell>> generateAllPossiblePatterns(final int rowSize, final int[] rowDescription) {
-    int numberOfOpenCells = rowSize - IntStream.of(rowDescription).sum();
-    int[] gaps = new int[rowDescription.length];
+    final int numberOfOpenCells = rowSize - IntStream.of(rowDescription).sum();
+    final int[] gaps = new int[rowDescription.length];
 
-    List<List<Cell>> ret = new ArrayList<>();
+    final List<List<Cell>> ret = new ArrayList<>();
     recursion(0, gaps, numberOfOpenCells, rowDescription, rowSize, ret);
     return ret;
   }
@@ -24,7 +24,7 @@ final class PatternGenerator {
   private static void recursion(final int level, final int[] gaps, final int openPlaces, final int[] rowDescription, final int rowSize,
       final List<List<Cell>> ret) {
     if (level == rowDescription.length) {
-      List<Cell> row = buildRow(rowSize, gaps, rowDescription);
+      final List<Cell> row = buildRow(rowSize, gaps, rowDescription);
 
       ret.add(row);
       return;
@@ -43,21 +43,21 @@ final class PatternGenerator {
    * @return
    */
   private static List<Cell> buildRow(final int rowSize, final int[] gaps, final int[] rowDescription) {
-    List<Cell> ret = new ArrayList<>(rowSize);
+    final List<Cell> ret = new ArrayList<>(rowSize);
 
     int count = 0;
     for (int i = 0; i < gaps.length; i++) {
       count = count + gaps[i] + rowDescription[i];
       for (int j = 0; j < gaps[i]; j++) {
-        ret.add(new Cell(Cell.EMPTY));
+        ret.add(new Cell(CellState.EMPTY));
       }
       for (int j = 0; j < rowDescription[i]; j++) {
-        ret.add(new Cell(Cell.FILLED));
+        ret.add(new Cell(CellState.FILLED));
       }
 
     }
     for (int i = count; i < rowSize; i++) {
-      ret.add(new Cell(Cell.EMPTY));
+      ret.add(new Cell(CellState.EMPTY));
     }
     return ret;
   }

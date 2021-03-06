@@ -30,7 +30,7 @@ class Row {
   private boolean solved;
 
   private List<List<Cell>> possibleValues = new ArrayList<>();
-  private final Accumulator accum = new Row.Accumulator();
+  private final Accumulator accum = new Accumulator();
 
   void addRowCell(final Cell c) {
     this.rowCells.add(c);
@@ -56,7 +56,7 @@ class Row {
         different = true;
         this.getCell(i).setValue(this.accum.get(i).charValue());
       }
-      if (this.getCell(i).charValue() == Cell.UNDECIDED) {
+      if (this.getCell(i).charValue() == CellState.UNDECIDED) {
         this.solved = false;
       }
     }
@@ -66,7 +66,7 @@ class Row {
 
   private boolean matchesEstablished(final List<Cell> row) {
     for (int i = 0; i < row.size(); i++) {
-      if (!(this.getCell(i).charValue() == Cell.UNDECIDED
+      if (!(this.getCell(i).charValue() == CellState.UNDECIDED
           || this.getCell(i).charValue() == row.get(i).charValue())) {
         return false;
       }
@@ -94,41 +94,5 @@ class Row {
 
   private Cell getCell(final int i) {
     return this.rowCells.get(i);
-  }
-
-  private class Accumulator {
-    private List<Cell> acc = new ArrayList<>();
-    private int numberFound = 0;
-
-    Accumulator() {
-    }
-
-    private List<Cell> update(final List<List<Cell>> possibleRows) {
-      this.numberFound = 0;
-      this.acc = new ArrayList<>();
-      for (List<Cell> row : possibleRows) {
-        updateAccumulator(row);
-      }
-      return this.acc;
-    }
-
-    private void updateAccumulator(final List<Cell> row) {
-      this.numberFound++;
-      if (this.numberFound == 1) {
-        for (Cell cell : row) {
-          this.acc.add(new Cell(cell.charValue()));
-        }
-      } else {
-        for (int i = 0; i < row.size(); i++) {
-          if (this.acc.get(i).charValue() != row.get(i).charValue()) {
-            this.acc.get(i).setValue(Cell.UNDECIDED);
-          }
-        }
-      }
-    }
-
-    Cell get(final int i) {
-      return this.acc.get(i);
-    }
   }
 }
