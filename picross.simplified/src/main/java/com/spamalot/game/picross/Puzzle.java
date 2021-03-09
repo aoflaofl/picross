@@ -1,6 +1,5 @@
 package com.spamalot.game.picross;
 
-import java.util.ArrayList;
 import java.util.List;
 
 class Puzzle {
@@ -19,8 +18,13 @@ class Puzzle {
     }
   }
 
+  private List<List<Integer>> columnDescriptions;
+  private List<List<Integer>> rowDescriptions;
+
   Puzzle(final PuzzleSpecification puzzleSpec) {
     this(puzzleSpec.getColumns().size(), puzzleSpec.getRows().size());
+    columnDescriptions = puzzleSpec.getColumns();
+    rowDescriptions = puzzleSpec.getRows();
   }
 
   private final int height;

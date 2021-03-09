@@ -4,26 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Accumulator {
-  private List<Cell> acc = new ArrayList<>();
+  private List<CellState> acc = new ArrayList<>();
   private int numberFound = 0;
 
   Accumulator() {
   }
 
-  List<Cell> update(final List<List<Cell>> possibleRows) {
+  List<CellState> update(final List<List<CellState>> possibleRows) {
     this.numberFound = 0;
     this.acc = new ArrayList<>();
-    for (List<Cell> row : possibleRows) {
+    for (List<CellState> row : possibleRows) {
       updateAccumulator(row);
     }
     return this.acc;
   }
 
-  private void updateAccumulator(final List<Cell> row) {
+  private void updateAccumulator(final List<CellState> row) {
     this.numberFound++;
     if (this.numberFound == 1) {
-      for (Cell cell : row) {
-        this.acc.add(new Cell(cell.charValue()));
+      for (CellState CellState : row) {
+        this.acc.add(new CellState(CellState.charValue()));
       }
     } else {
       for (int i = 0; i < row.size(); i++) {
@@ -34,7 +34,7 @@ class Accumulator {
     }
   }
 
-  Cell get(final int i) {
+  CellState get(final int i) {
     return this.acc.get(i);
   }
 }
