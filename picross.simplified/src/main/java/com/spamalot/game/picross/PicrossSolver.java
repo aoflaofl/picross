@@ -26,17 +26,17 @@ public final class PicrossSolver {
     LOG.info("Picross Solver.");
 
     List<Puzzle> pz = readPuzzleJson("src/main/resources/pppp.json");
-    for (Puzzle p : pz) {
-      solveTheDamnPuzzle(p);
-    }
+    solveTheDamnPuzzle(pz.get(0));
+//    for (Puzzle p : pz) {
+//      solveTheDamnPuzzle(p);
+//    }
 // [ 1, 2, 1 ] width is 8
     Odometer o = new Odometer(1, 3);
     o.makeList();
   }
 
   private static void solveTheDamnPuzzle(Puzzle p) {
-    // TODO Auto-generated method stub
-    
+    LOG.info("Puzzle:\n{}", p);
   }
 
   private static List<Puzzle> readPuzzleJson(final String path) {

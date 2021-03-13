@@ -1,11 +1,17 @@
 package com.spamalot.game.picross;
 
 public enum CellState {
-  EMPTY('.'), FILLED('*'), UNDECIDED('-');
+  /** A known empty cell. */
+  EMPTY('.'),
+  /** A known filled cell. */
+  FILLED('*'),
+  /** An unknown cell. */
+  UNDECIDED('-');
 
+  /** Display Value. */
   private String displayValue;
 
-  CellState(char c) {
+  CellState(final char c) {
     this.displayValue = String.valueOf(c);
   }
 
