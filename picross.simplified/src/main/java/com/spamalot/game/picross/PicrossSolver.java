@@ -31,12 +31,13 @@ public final class PicrossSolver {
 //      solveTheDamnPuzzle(p);
 //    }
 // [ 1, 2, 1 ] width is 8
-    Odometer o = new Odometer(1, 3);
-    o.makeList();
+//    Odometer o = new Odometer(1, 3);
+//    o.makeList();
   }
 
   private static void solveTheDamnPuzzle(Puzzle p) {
     LOG.info("Puzzle:\n{}", p);
+    p.updateRow(0);
   }
 
   private static List<Puzzle> readPuzzleJson(final String path) {

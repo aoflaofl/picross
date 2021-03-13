@@ -1,6 +1,9 @@
 package com.spamalot.game.picross;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 class Odometer {
   private final int size;
@@ -53,12 +56,18 @@ class Odometer {
     }
   }
 
-  void makeList() {
+  List<List<Integer>> makeList() {
+    List<List<Integer>> s = new ArrayList<>();
 
     do {
-      System.out.println(Arrays.toString(this.counters) + " total: " + this.curTotal);
+      // System.out.println(Arrays.toString(this.counters) + " total: " +
+      // this.curTotal);
+      ArrayList<Integer> integerArray = (ArrayList<Integer>) Arrays.stream(this.counters).boxed()
+          .collect(Collectors.toList());
+      s.add(integerArray);
     } while (advance());
 
+    return s;
   }
 
 }

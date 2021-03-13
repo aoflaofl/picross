@@ -2,6 +2,7 @@ package com.spamalot.game.picross;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +14,11 @@ import java.util.List;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class PuzzleSpecification {
-  @JsonProperty("name")
-  private String name;
-
   @JsonProperty("columns")
   private List<List<Integer>> columns = new ArrayList<>();
+
+  @JsonProperty("name")
+  private String name;
 
   @JsonProperty("rows")
   private List<List<Integer>> rows = new ArrayList<>();
