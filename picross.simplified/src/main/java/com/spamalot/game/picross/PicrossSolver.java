@@ -35,9 +35,17 @@ public final class PicrossSolver {
 //    o.makeList();
   }
 
-  private static void solveTheDamnPuzzle(Puzzle p) {
+  private static void solveTheDamnPuzzle(final Puzzle p) {
     LOG.info("Puzzle:\n{}", p);
     p.updateRow(0);
+    p.updateRow(1);
+    p.updateRow(2);
+    p.updateRow(3);
+    p.updateRow(4);
+    p.updateRow(5);
+    p.updateRow(6);
+    p.updateRow(7);
+    p.updateRow(8);
   }
 
   private static List<Puzzle> readPuzzleJson(final String path) {

@@ -1,7 +1,6 @@
 package com.spamalot.game.picross;
 
 import java.util.List;
-import java.util.stream.IntStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,31 +42,46 @@ class Puzzle {
     this.rowDescriptions = puzzleSpec.getRows();
   }
 
-  public void updateRow(int row) {
-    List<Integer> r = this.rowDescriptions.get(row);
-    final int numberOfOpenCells = this.width - r.stream().mapToInt(Integer::intValue).sum();
+  public void updateRow(final int rowNum) {
+    List<Integer> rowDescription = this.rowDescriptions.get(rowNum);
+    int rowWidth = this.width;
 
-    LOG.info("Row description: {}, {}", r, numberOfOpenCells);
+    extracted(rowDescription, rowWidth);
+  }
 
-    Odometer o = new Odometer(r.size(), numberOfOpenCells);
-    List<List<Integer>> e = o.makeList();
-    for (int i = 0; i < e.size(); i++) {
-      List<Integer> ww = e.get(i);
-      int qwe = 0;
-      for (int k = 0; k < ww.size(); k++) {
-        qwe = qwe + ww.get(k) + r.get(k);
-        for (int sas = 0; sas < ww.get(k); sas++) {
-          System.out.print(".");
-        }
-        for (int sas = 0; sas < r.get(k); sas++) {
-          System.out.print("*");
-        }
-      }
-      for (int d = 0; d < (width - qwe); d++) {
-        System.out.print(".");
-      }
+  private void extracted(List<Integer> description, int length) {
+    final int numberOfOpenCells = length - description.stream().mapToInt(Integer::intValue).sum();
+
+    LOG.info("Row description: {}, {}", description, numberOfOpenCells);
+
+    Odometer o = new Odometer(description.size(), numberOfOpenCells);
+    List<List<Integer>> spaceDescription = o.makeList();
+
+    for (List<Integer> spaces : spaceDescription) {
+      protnDOIdljg(description, spaces);
       System.out.println();
     }
+  }
+
+  private CellStateList protnDOIdljg(List<Integer> description, List<Integer> spaces) {
+    CellStateList csl = new CellStateList();
+    int cellsFilled = 0;
+    for (int i = 0; i < spaces.size(); i++) {
+      cellsFilled = cellsFilled + spaces.get(i) + description.get(i);
+      for (int j = 0; j < spaces.get(i); j++) {
+        csl.add(CellState.EMPTY);
+        System.out.print(".");
+      }
+      for (int j = 0; j < description.get(i); j++) {
+        csl.add(CellState.FILLED);
+        System.out.print("*");
+      }
+    }
+    for (int i = 0; i < (this.width - cellsFilled); i++) {
+      csl.add(CellState.EMPTY);
+      System.out.print(".");
+    }
+    return csl;
   }
 
   @Override

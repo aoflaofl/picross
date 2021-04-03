@@ -5,7 +5,7 @@ import java.util.List;
 
 class Accumulator {
   private List<CellState> acc = new ArrayList<>();
-  private int numberFound = 0;
+  // private int numberFound = 0;
 
   Accumulator() {
   }
