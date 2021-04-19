@@ -23,43 +23,33 @@ public final class PicrossSolver {
    * @param args The arguments to the program
    */
   public static void main(final String[] args) {
+
     LOG.info("Picross Solver.");
 
-    List<Puzzle> pz = readPuzzleJson("src/main/resources/pppp.json");
-    solveTheDamnPuzzle(pz.get(0));
+    try {
+      List<Puzzle> pz = readPuzzleJson("src/main/resources/pppp.json");
+      solveTheDamnPuzzle(pz.get(0));
 //    for (Puzzle p : pz) {
-//      solveTheDamnPuzzle(p);
-//    }
-// [ 1, 2, 1 ] width is 8
-//    Odometer o = new Odometer(1, 3);
-//    o.makeList();
+//    solveTheDamnPuzzle(p);
+//  }
+    } catch (IOException e) {
+      LOG.error("Error", e);
+    }
   }
 
   private static void solveTheDamnPuzzle(final Puzzle p) {
     LOG.info("Puzzle:\n{}", p);
-    p.updateRow(0);
-    p.updateRow(1);
-    p.updateRow(2);
-    p.updateRow(3);
-    p.updateRow(4);
-    p.updateRow(5);
-    p.updateRow(6);
-    p.updateRow(7);
-    p.updateRow(8);
+    p.updateRows();
   }
 
-  private static List<Puzzle> readPuzzleJson(final String path) {
+  private static List<Puzzle> readPuzzleJson(final String path) throws IOException {
     List<Puzzle> ret = new ArrayList<>();
 
-    try {
-      List<PuzzleSpecification> list = Arrays.asList(MAPPER.readValue(new File(path), PuzzleSpecification[].class));
-      for (PuzzleSpecification pd : list) {
-        ret.add(new Puzzle(pd));
-      }
-    } catch (IOException e) {
-      LOG.error("Problem reading file {}", path, e);
-      System.exit(0);
+    List<PuzzleSpecification> list = Arrays.asList(MAPPER.readValue(new File(path), PuzzleSpecification[].class));
+    for (PuzzleSpecification pd : list) {
+      ret.add(new Puzzle(pd));
     }
+
     return ret;
   }
 }

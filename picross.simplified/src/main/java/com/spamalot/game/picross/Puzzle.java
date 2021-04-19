@@ -42,14 +42,14 @@ class Puzzle {
     this.rowDescriptions = puzzleSpec.getRows();
   }
 
-  public void updateRow(final int rowNum) {
-    List<Integer> rowDescription = this.rowDescriptions.get(rowNum);
-    int rowWidth = this.width;
-
-    extracted(rowDescription, rowWidth);
+  public void updateRows() {
+    for (int rowNum = 0; rowNum < this.height; rowNum++) {
+      List<Integer> rowDescription = this.rowDescriptions.get(rowNum);
+      generatePatternList(rowDescription, this.width);
+    }
   }
 
-  private void extracted(List<Integer> description, int length) {
+  private static void generatePatternList(List<Integer> description, int length) {
     final int numberOfOpenCells = length - description.stream().mapToInt(Integer::intValue).sum();
 
     LOG.info("Row description: {}, {}", description, numberOfOpenCells);
@@ -58,29 +58,21 @@ class Puzzle {
     List<List<Integer>> spaceDescription = o.makeList();
 
     for (List<Integer> spaces : spaceDescription) {
-      protnDOIdljg(description, spaces);
-      System.out.println();
+      generatePattern(description, spaces, length);
     }
   }
 
-  private CellStateList protnDOIdljg(List<Integer> description, List<Integer> spaces) {
+  private static CellStateList generatePattern(List<Integer> description, List<Integer> spaces, int length) {
     CellStateList csl = new CellStateList();
     int cellsFilled = 0;
     for (int i = 0; i < spaces.size(); i++) {
       cellsFilled = cellsFilled + spaces.get(i) + description.get(i);
-      for (int j = 0; j < spaces.get(i); j++) {
-        csl.add(CellState.EMPTY);
-        System.out.print(".");
-      }
-      for (int j = 0; j < description.get(i); j++) {
-        csl.add(CellState.FILLED);
-        System.out.print("*");
-      }
+      csl.addSome(CellState.EMPTY, spaces.get(i));
+      csl.addSome(CellState.FILLED, description.get(i));
     }
-    for (int i = 0; i < (this.width - cellsFilled); i++) {
-      csl.add(CellState.EMPTY);
-      System.out.print(".");
-    }
+    csl.addSome(CellState.EMPTY, (length - cellsFilled));
+
+    LOG.info("CSL: {}", csl);
     return csl;
   }
 

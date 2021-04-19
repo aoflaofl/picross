@@ -60,8 +60,6 @@ class Odometer {
     List<List<Integer>> s = new ArrayList<>();
 
     do {
-      // System.out.println(Arrays.toString(this.counters) + " total: " +
-      // this.curTotal);
       ArrayList<Integer> integerArray = (ArrayList<Integer>) Arrays.stream(this.counters).boxed()
           .collect(Collectors.toList());
       s.add(integerArray);

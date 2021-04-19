@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Accumulator {
-  private List<CellState> acc = new ArrayList<>();
+  private final List<CellState> acc = new ArrayList<>();
   // private int numberFound = 0;
 
   Accumulator() {
